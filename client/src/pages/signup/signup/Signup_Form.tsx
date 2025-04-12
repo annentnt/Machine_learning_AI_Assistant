@@ -39,8 +39,8 @@ function SignUp_Form() {
             } else {
                 setError(data.error || "Đăng ký thất bại, vui lòng thử lại.");
             }
-        } catch (error) {
-            setError("Lỗi kết nối, vui lòng thử lại.");
+        } catch (error : any) {
+            setError(error.errorMessage);
         }
     };
 

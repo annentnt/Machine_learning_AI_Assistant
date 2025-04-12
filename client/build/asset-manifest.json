@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c6187dd7.css",
+    "main.js": "/static/js/main.a457d94f.js",
+    "static/js/453.3af33ebe.chunk.js": "/static/js/453.3af33ebe.chunk.js",
+    "static/media/welcome.svg": "/static/media/welcome.7cc78df9588b03c14747569af7b6b3cd.svg",
+    "static/media/alert.svg": "/static/media/alert.61bb85c4b601b8c28867d53843583c94.svg",
+    "static/media/hero.svg": "/static/media/hero.14dc1938b40c2ae6fccfeef676d9ec5d.svg",
+    "static/media/happypeople.svg": "/static/media/happypeople.5cabfa19fcf634f5d0f59ce860ed30e3.svg",
+    "static/media/happy_people.svg": "/static/media/happy_people.76f53ec2eb640955731b5c9f67af1a12.svg",
+    "static/media/reset.svg": "/static/media/reset.a8fb993e9ec4e90fe21849cc7d5fb1a3.svg",
+    "static/media/password 2.svg": "/static/media/password 2.c7c43c09a87ccb80feaffafce2c25266.svg",
+    "static/media/email_verify.svg": "/static/media/email_verify.9280d27a9eff4d7f2246882b120de19b.svg",
+    "static/media/validation.svg": "/static/media/validation.e693b3e88d2dca1c89c16681f4e4f593.svg",
+    "static/media/feature2.png": "/static/media/feature2.647244b1dbcba6992b75.png",
+    "static/media/feature1.png": "/static/media/feature1.d2cc26add92a95a245ae.png",
+    "static/media/mem1.png": "/static/media/mem1.b0410774bbb221bcdf94.png",
+    "static/media/feature3.png": "/static/media/feature3.3325a474e5cce7c3b567.png",
+    "static/media/logo part.svg": "/static/media/logo part.0ae09a42389fc2f28021197ae36b6a7a.svg",
+    "static/media/mem2.png": "/static/media/mem2.48e768f013e5c36dea18.png",
+    "static/media/mem3.png": "/static/media/mem3.0030c3a4de84b8b54ea2.png",
+    "static/media/mem4.png": "/static/media/mem4.de3c6944d307445f8a56.png",
+    "static/media/Handshake Heart.svg": "/static/media/Handshake Heart.9bf01ee2d6a103db95451fb3acd6b55a.svg",
+    "static/media/Mail.svg": "/static/media/Mail.41ccc6e48b1b17a7d7295eaacc3e070d.svg",
+    "static/media/Customer.svg": "/static/media/Customer.931dd4925156d4d26aac6515282c4985.svg",
+    "static/media/fail.svg": "/static/media/fail.8cb4da6d4bc62e64c2fbcb9ca658142a.svg",
+    "static/media/Right Arrow.svg": "/static/media/Right Arrow.f55b87436598e3e8cbb7a41e7e3e8081.svg",
+    "static/media/Successful.svg": "/static/media/Successful.d00e574e0933e38def328044bf5a28dd.svg",
+    "index.html": "/index.html",
+    "main.c6187dd7.css.map": "/static/css/main.c6187dd7.css.map",
+    "main.a457d94f.js.map": "/static/js/main.a457d94f.js.map",
+    "453.3af33ebe.chunk.js.map": "/static/js/453.3af33ebe.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c6187dd7.css",
+    "static/js/main.a457d94f.js"
+  ]
+}

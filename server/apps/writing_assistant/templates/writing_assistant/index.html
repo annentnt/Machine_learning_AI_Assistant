@@ -1,0 +1,184 @@
+<!-- writing_assistant/templates/writing_assistant/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Writing Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #history-btn {
+            background-color: #34a853;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #history-btn:hover {
+            background-color: #2c8c43;
+        }
+        
+        button:hover {
+            background-color: #3367d6;
+        }
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .loading {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Writing Assistant</h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="original-content">Original Content</label>
+            <textarea id="original-content" placeholder="Enter the text you want to rewrite..."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="instructions">Instructions (Optional)</label>
+            <textarea id="instructions" placeholder="Make it more engaging, simplify it, etc."></textarea>
+        </div>
+        <button id="submit-btn">Rewrite Content</button>
+        <div class="loading">Processing your request...</div>
+        <div class="error"></div>
+    </div>
+    
+    <div class="result-container">
+        <h2>Rewritten Content</h2>
+        <div id="rewritten-content"></div>
+        <button id="history-btn">View History</button>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitBtn = document.getElementById('submit-btn');
+            const originalContent = document.getElementById('original-content');
+            const instructions = document.getElementById('instructions');
+            const resultContainer = document.querySelector('.result-container');
+            const rewrittenContent = document.getElementById('rewritten-content');
+            const errorDiv = document.querySelector('.error');
+            const loadingDiv = document.querySelector('.loading');
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+            
+            submitBtn.addEventListener('click', async function() {
+                if (!originalContent.value.trim()) {
+                    errorDiv.textContent = 'Please enter some content to rewrite';
+                    return;
+                }
+                
+                errorDiv.textContent = '';
+                loadingDiv.style.display = 'block';
+                
+                try {
+                    const response = await fetch('/api/writing_assistant/rewrite/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            original_content: originalContent.value,
+                            instructions: instructions.value
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Failed to rewrite content');
+                    }
+                    
+                    rewrittenContent.textContent = data.rewritten_content;
+                    resultContainer.style.display = 'block';
+                    
+                } catch (error) {
+                    errorDiv.textContent = error.message;
+                } finally {
+                    loadingDiv.style.display = 'none';
+                }
+            });
+            if (editId) {
+                loadEditRequest(editId);
+            }
+            
+            // Hàm để tải nội dung của yêu cầu cần chỉnh sửa
+            async function loadEditRequest(id) {
+                try {
+                    const response = await fetch(`/api/writing_assistant/history/${id}/`);
+                    if (!response.ok) {
+                        throw new Error('Failed to load request');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Điền dữ liệu vào form
+                    document.getElementById('original-content').value = data.original_content;
+                    document.getElementById('instructions').value = data.instructions;
+                    
+                    // Nếu có nội dung đã viết lại, hiển thị nó
+                    if (data.rewritten_content) {
+                        document.getElementById('rewritten-content').textContent = data.rewritten_content;
+                        document.querySelector('.result-container').style.display = 'block';
+                    }
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Không thể tải yêu cầu để chỉnh sửa.');
+                }
+            }
+            document.getElementById('history-btn').addEventListener('click', function() {
+                window.location.href = '/api/writing_assistant/history-view/';
+            });
+            
+        });
+    </script>
+</body>
+</html>
