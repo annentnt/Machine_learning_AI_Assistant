@@ -16,7 +16,8 @@ module.exports = {
         'hovering-linear-1': '#19856C',
         'bar-color': '#549EA4',
         'neon': '#D8E760',
-        'bar-step': '#236A6A'
+        'bar-step': '#236A6A',
+        'green-1': '#389893'
       },
       backgroundImage: {
         'hero-gradient': 'radial-gradient(circle, theme(colors.gradient-start), theme(colors.gradient-end))',

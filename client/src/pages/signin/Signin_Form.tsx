@@ -48,7 +48,11 @@ export default function Signin_Form() {
                 }
                 
                 login(data.accessToken, data.refreshToken);
+<<<<<<< HEAD
                 navigate("/"); // Redirect to dashboard
+=======
+                navigate("/main"); 
+>>>>>>> 03a1e69c441f23abf87fc1b19b671f5abf9596f6
             } else {
                 setErrorMessage(data.error || "Đăng nhập thất bại!");
             }

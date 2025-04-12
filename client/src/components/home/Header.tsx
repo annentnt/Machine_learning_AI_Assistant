@@ -39,12 +39,15 @@ const Header: React.FC = () => {
         <Link to="/features" className="text-white hover:bg-[#00DFA8] px-12 py-4 transition duration-300 border-[#00DFA8] hover:border-transparent hover:text-black">
           Features
         </Link>
+<<<<<<< HEAD
         <Link to="/how-it-works" className="text-white hover:bg-[#00DFA8] px-9 py-4 transition duration-300 border-[#00DFA8] hover:border-transparent hover:text-black">
           How it works?
         </Link>
         <Link to="/contact" className="text-white hover:bg-[#00DFA8] px-12 py-4 transition duration-300 border-[#00DFA8] hover:border-transparent hover:text-black">
           Contact
         </Link>
+=======
+>>>>>>> 03a1e69c441f23abf87fc1b19b671f5abf9596f6
       </nav>
 
       <div className="flex items-center space-x-2 justify-center">
