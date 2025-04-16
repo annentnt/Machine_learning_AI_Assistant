@@ -37,7 +37,7 @@ export default function Signin_Form() {
 
             if (response.ok) {
                 localStorage.setItem("accessToken", data.access); // Store token
-                
+                console.log("Token lưu vào localStorage:", data.access);
                 // Always update local storage based on checkbox state
                 if (rememberMe) {
                     localStorage.setItem("rememberedUsername", username);
@@ -46,13 +46,10 @@ export default function Signin_Form() {
                     localStorage.removeItem("rememberedUsername");
                     localStorage.removeItem("rememberedPassword");
                 }
-                
-                login(data.accessToken, data.refreshToken);
-<<<<<<< HEAD
-                navigate("/"); // Redirect to dashboard
-=======
+                login(data.access, data.refresh);
+
+                // login(data.accessToken, data.refreshToken);
                 navigate("/main"); 
->>>>>>> 03a1e69c441f23abf87fc1b19b671f5abf9596f6
             } else {
                 setErrorMessage(data.error || "Đăng nhập thất bại!");
             }

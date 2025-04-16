@@ -2,10 +2,6 @@ import Signin_Form from './Signin_Form';
 import welcomeImage from '../../img/welcome.svg';
 import { useNavigate } from 'react-router-dom';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 03a1e69c441f23abf87fc1b19b671f5abf9596f6
 function SignIn() {
   return (
       <div className="flex w-full justify-center items-center h-full">

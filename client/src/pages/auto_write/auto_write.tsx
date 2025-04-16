@@ -15,6 +15,9 @@ const AutoWrite: React.FC = () => {
   const [showTryAgain, setShowTryAgain] = useState(false);
 
   const navigate = useNavigate();
+  const getToken = () => {
+    return localStorage.getItem('accessToken');  // Assuming the token is stored in localStorage
+  }
 
   const handleButtonClick = async () => {
     if (showTryAgain) {
@@ -23,22 +26,50 @@ const AutoWrite: React.FC = () => {
       setShowTryAgain(false);
     }
 
-    setIsLoading(true);
-    toast.info('Đang xử lý yêu cầu...', { autoClose: false });
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    
 
     if (!originalText.trim()) {
       toast.error('Vui lòng nhập văn bản gốc trước khi viết lại!', { autoClose: 2000 });
-      setIsLoading(false);
       return;
     }
-
-    setResult(`"${originalText}"`);
-    setShowResult(true);
-    setIsLoading(false);
-    toast.dismiss();
-    setShowTryAgain(true);
+  
+    setIsLoading(true);
+    toast.info('Đang xử lý yêu cầu...', { autoClose: 2000 });
+  
+    try {
+      const token = getToken();
+      if (!token) {
+        toast.error('Vui lòng đăng nhập trước!', { autoClose: 2000 });
+        return;
+      }
+      const response = await fetch('http://localhost:8000/api/writing_assistant/rewrite/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          original_content: originalText,
+          instructions: descriptionText,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setResult(data.rewritten_content);  // dữ liệu trả về từ backend
+        setShowResult(true);
+        setShowTryAgain(true);
+        toast.success('Đã viết lại thành công!', { autoClose: 1000 });
+      } else {
+        toast.error(data.error || 'Lỗi xử lý!', { autoClose: 2000 });
+      }
+    } catch (error) {
+      toast.error('Lỗi kết nối máy chủ!', { autoClose: 2000 });
+    } finally {
+      setIsLoading(false);
+      toast.dismiss();
+    }
   };
 
   const handleCopyClick = () => {
@@ -124,7 +155,9 @@ const AutoWrite: React.FC = () => {
                 <p className="text-white">{result}</p>
               </div>
               <div className="flex justify-end mt-4">
-                <button className="bg-gray-300 rounded-lg p-2 w-40">Lịch sử</button>
+                <button className="bg-gray-300 rounded-lg p-2 w-40"
+                onClick={() => navigate('/rewrite-history')}
+                >Lịch sử</button>
               </div>
             </motion.div>
           )}

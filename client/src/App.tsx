@@ -66,7 +66,7 @@ function AppContent() {
         <Route path="/main" element={<MainPage />} />
         <Route path="/translate" element={<TranslatePage />} />
         <Route path="/rewrite-history" element={<RewriteHistory />} />
-        <Route path="/rewrite-history/details" element={<DetailRewriteHistory />} />
+        <Route path="/rewrite-history/details/:id" element={<DetailRewriteHistory />} />
         <Route path="/translation-history" element={<TranslationHistory />} />
         <Route path="/translation-history/details" element={<DetailTransaltionHistory />} />
       </Routes>

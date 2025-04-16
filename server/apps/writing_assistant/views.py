@@ -6,18 +6,16 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 import json
 
 from .models import RewriteRequest
 from .serializers import RewriteRequestSerializer
 from .gemini_api import GeminiClient
 
-# Existing views
-def index(request):
-    """Home page view"""
-    return render(request, 'writing_assistant/index.html')
-
-@csrf_exempt
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def rewrite_content(request):
     """API endpoint to rewrite content"""
     if request.method == 'POST':
@@ -31,7 +29,8 @@ def rewrite_content(request):
             
             # Create a rewrite request object
             rewrite_request = RewriteRequest(
-                user=request.user if request.user.is_authenticated else None,
+                #user=request.user if request.user.is_authenticated else None,
+                user=request.user,
                 original_content=original_content,
                 instructions=instructions
             )
@@ -61,26 +60,19 @@ def rewrite_content(request):
     
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-# CRUD API endpoints for history
-@login_required
-def history_view(request):
-    """View để hiển thị lịch sử viết lại"""
-    requests = RewriteRequest.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'writing_assistant/history.html', {'requests': requests})
+
 class RewriteHistoryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows rewrite history to be viewed, created, edited or deleted.
     """
     serializer_class = RewriteRequestSerializer
-    #permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
-        """
-        This view returns a list of all the rewrite requests
-        for the currently authenticated user.
-        """
         user = self.request.user
-        return RewriteRequest.objects.filter(user=user)
+        if user.is_authenticated:
+            return RewriteRequest.objects.filter(user=user).order_by('-created_at')
+        return RewriteRequest.objects.none()
+
     
     def perform_create(self, serializer):
         """Save the post data when creating a new rewrite request."""
@@ -111,6 +103,8 @@ class RewriteHistoryViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated])
 def get_history(request):
     """Get rewrite history for the current user"""
+    print("✅ Token nhận được từ client:", request.headers.get('Authorization'))
+    print("🧾 Đối tượng user xác thực:", request.user)
     rewrite_requests = RewriteRequest.objects.filter(user=request.user)
     serializer = RewriteRequestSerializer(rewrite_requests, many=True)
     return Response(serializer.data)
