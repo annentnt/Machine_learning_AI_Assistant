@@ -14,7 +14,7 @@ function Header() {
   const handleLogoutClick = () => {
     console.log('Đăng xuất');
     setIsDropdownOpen(false);
-    navigate('/');
+    navigate('/signin');
   };
 
   return (
