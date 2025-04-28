@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "apps.writing_assistant",
     "apps.users",
+    "apps.translator",
     "rest_framework",
     'rest_framework_simplejwt.token_blacklist',
     "corsheaders",
@@ -88,9 +89,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "ai_assistant.wsgi.application"
-
-
-
 
 DATABASES = {
     'default': {
@@ -147,10 +145,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        'rest_framework.permissions.AllowAny',
-        #"rest_framework.permissions.IsAuthenticated",  # Mặc định yêu cầu xác thực
-    ),
+    # "DEFAULT_PERMISSION_CLASSES": (
+    #     # 'rest_framework.permissions.AllowAny',
+    #     "rest_framework.permissions.IsAuthenticated",  # Mặc định yêu cầu xác thực
+    # ),
 }
 
 from datetime import timedelta
@@ -180,3 +178,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "giaphucnguyen200441@gmail.com"
 EMAIL_HOST_PASSWORD = "bwsv spft ghjl omgt"
 DEFAULT_FROM_EMAIL = "Echo Mind"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
