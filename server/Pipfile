@@ -12,8 +12,8 @@ psycopg2 = "*"
 djangorestframework = "*"
 django-extensions = "*"
 requests = "*"
-ultralytics = "*"
 pillow = "*"
+ultralytics = "*"
 
 [dev-packages]
 
